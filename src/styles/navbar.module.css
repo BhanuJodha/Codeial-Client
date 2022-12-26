@@ -37,12 +37,14 @@
 }
 .nav .navLinks ul li {
   padding: 0 4px;
-}
-.nav .navLinks ul li a {
   text-decoration: none;
   color: #fff;
 }
-.nav .navLinks ul li a:hover {
+.nav .navLinks ul li>* {
+  text-decoration: none;
+  color: #fff;
+}
+.nav .navLinks ul li>*:hover {
   text-decoration: underline;
 }
 .nav .navLinks ul li:hover {

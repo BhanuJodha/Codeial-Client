@@ -1,9 +1,18 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { useAuth } from "../hooks";
 
 import { Home, Login, Page404 } from "../pages";
+import Loader from "./Loader";
 import Navbar from "./Navbar";
 
 function App() {
+  const auth = useAuth();
+  
+  // if authentication pending or loading
+  if (auth.loading){
+    return <Loader></Loader>;
+  }
+
   return (
     <div className="App">
       <Router>

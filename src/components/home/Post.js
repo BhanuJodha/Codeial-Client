@@ -1,4 +1,4 @@
-import styles from "../styles/home.module.css";
+import styles from "../../styles/home.module.css";
 import Comment from "./Comment";
 
 const Post = (props) => {
