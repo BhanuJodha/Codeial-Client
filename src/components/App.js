@@ -2,14 +2,15 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import { useAuth } from "../hooks";
 
 import { Home, Login, Page404, Setting, Signup } from "../pages";
+import { PrivateRoute, PublicRoute } from "../utils";
 import Loader from "./Loader";
 import Navbar from "./Navbar";
 
 function App() {
   const auth = useAuth();
-  
+
   // if authentication pending or loading
-  if (auth.loading){
+  if (auth.loading) {
     return <Loader></Loader>;
   }
 
@@ -18,13 +19,13 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />}/>
-          <Route exact path="/setting" element={<Setting />}/>
-          <Route exact path="/login" element={<Login />}/>
-          <Route exact path="/signup" element={<Signup />}/>
-          <Route exact path="/Page404" element={<Page404 />}/>
-          
-          <Route path="/*" element={<Navigate to="/Page404" />}/>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/setting" element={<PrivateRoute element={<Setting />} />} />
+          <Route exact path="/login" element={<PublicRoute element={<Login />} />} />
+          <Route exact path="/signup" element={<PublicRoute element={<Signup />} />} />
+          <Route exact path="/Page404" element={<Page404 />} />
+
+          <Route path="/*" element={<Navigate to="/Page404" />} />
         </Routes>
       </Router>
     </div>

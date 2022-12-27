@@ -47,6 +47,9 @@
   padding: 10px 20px;
   margin-right: 10px;
 }
+.settings .saveBtn:disabled {
+  cursor: not-allowed;
+}
 .settings .goBack {
   color: #ef7917;
   margin-top: 7px;

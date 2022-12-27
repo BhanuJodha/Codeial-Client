@@ -1,13 +1,35 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { useAuth } from "../hooks";
 import styles from "../styles/settings.module.css";
 
 const Setting = () => {
-    const [editMode, setEditMode] = useState(false);
-
     const auth = useAuth();
+    
+    const [editMode, setEditMode] = useState(false);
+    const [name, setName] = useState(auth.user ? auth.user.name :"");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [saving, setSaving] = useState(false);
+
+    const saveChanges = async () => {
+        if (!saving) {
+            setSaving(true);
+            const toastID = toast.loading("Saving...");
+            
+            const response = await auth.editUser(name, password, confirmPassword, toastID);
+            // If success then reset form
+            if (response.success) {
+                setPassword("");
+                setConfirmPassword("");
+                setEditMode(false);
+            }
+
+            setSaving(false);
+        }
+    }
 
     return (
         <div className={styles.settings}>            
@@ -28,7 +50,7 @@ const Setting = () => {
                 <>
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Name</div>
-                        <div className={styles.fieldValue}>{auth.user?.name}</div>
+                        <div className={styles.fieldValue}>{name}</div>
                     </div>
 
                     <div className={styles.btnGrp}>
@@ -41,21 +63,21 @@ const Setting = () => {
                 <>
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Name</div>
-                        <input type={"text"} value={auth.user?.name} />
+                        <input type={"text"} value={name} onChange={(e) => setName(e.target.value)} disabled={saving}/>
                     </div>
 
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Password</div>
-                        <input type="password" />
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} disabled={saving}/>
                     </div>
 
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Confirm Password</div>
-                        <input type="password" />
+                        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={saving}/>
                     </div>
 
                     <div className={styles.btnGrp}>
-                        <button className={`button ${styles.saveBtn}`}>Save Changes</button>
+                        <button className={`button ${styles.saveBtn}`} onClick={saveChanges} disabled={saving}>{saving ? "Saving..." : "Save Changes"}</button>
                         <button className={`button ${styles.editBtn}`} onClick={() => setEditMode(false)}>Go Back</button>
                     </div>
                 </>

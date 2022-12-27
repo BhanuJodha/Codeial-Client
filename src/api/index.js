@@ -12,7 +12,7 @@ const customFetch = async (url, { ...config }) => {
 
     const key = window.localStorage.getItem(LOCAL_KEY);
     if (key)
-        config.headers.Authentication = `Bearer ${key}`;
+        config.headers.Authorization = `Bearer ${key}`;
 
     try {
         const response = await fetch(url, config);
@@ -43,5 +43,12 @@ export const signup = (name, email, password, confirm_password) => {
     return customFetch(API_URLS.signup(), { 
         method: "POST",
         body: getFormBody({name, email, password, confirm_password})
+    });
+}
+
+export const editUser = (id, name, password, confirm_password) => {
+    return customFetch(API_URLS.editUser(), { 
+        method: "POST",
+        body: getFormBody({id, name, password, confirm_password})
     });
 }

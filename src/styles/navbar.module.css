@@ -1,13 +1,12 @@
 .nav {
   display: flex;
-  background: #6200ee;
-  padding: 10px 20px;
+  background: #6A1B9A;
+  padding: 5px 20px;
   align-items: center;
   justify-content: space-between;
 }
 .logo {
-  color: #fff;
-  font-size: 35px;
+  height: 35px;
 }
 .logoIcons {
   font-size: 40px;

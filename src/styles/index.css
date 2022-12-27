@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7f9fc;
+  background-color: #F5F5F5;
 }
 
 code {
@@ -20,7 +20,7 @@ code {
   height: 50px;
   border: 3px solid #d6d6d6;
   border-radius: 50%;
-  border-top-color: #6200ee;
+  border-top-color: #7B1FA2;
   animation: spin 1s linear infinite;
   -webkit-animation: spin 1s linear infinite;
   margin-right: 10px;

@@ -16,7 +16,7 @@ root.render(
     </AuthProvider>
 
     {/* Notification services */}
-    <ToastContainer autoClose={5000} position={'top-left'}/>
+    <ToastContainer autoClose={5000} position={'bottom-left'}/>
   </React.StrictMode>
 );
 

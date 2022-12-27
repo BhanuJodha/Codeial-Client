@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import styles from '../styles/navbar.module.css';
+import codialLogo from '../images/Codial-new.png';
 
 const Navbar = () => {
   const auth = useAuth();
@@ -11,7 +12,8 @@ const Navbar = () => {
         <Link to="/">
           <img
             alt=""
-            src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
+            src={codialLogo}
+            className={styles.logo}
           />
         </Link>
       </div>

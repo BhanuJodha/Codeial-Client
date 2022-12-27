@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks';
 import styles from '../styles/login.module.css';
@@ -9,7 +8,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [logging, setLogging] = useState(false);
 
-  const navigate = useNavigate();
   const auth = useAuth();
 
   const formHandler = async (e) => {
@@ -20,11 +18,7 @@ const Login = () => {
     setLogging(true);
     // Notification
     const toastID = toast.loading("Logging in...");
-
-    const response = await auth.logIn(email, password, toastID);
-    // on success redirect to home page
-    if (response.success)
-      navigate("/");
+    await auth.logIn(email, password, toastID);
 
     setLogging(false);
   }

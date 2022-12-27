@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks";
 
@@ -13,7 +12,6 @@ const Signup = () => {
     const [signingUp, setSigningUp] = useState(false);
 
     const auth = useAuth();
-    const navigate = useNavigate();
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -23,10 +21,7 @@ const Signup = () => {
     
             // Showing notification
             const toastID = toast.loading("Signing Up...");
-            const response = await auth.signUp(name, email, password, confirmPassword, toastID);
-            // on success redirect to login page
-            if(response.success)
-                navigate("/login");
+            await auth.signUp(name, email, password, confirmPassword, toastID);
     
             setSigningUp(false);
         }
