@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import jwt from "jwt-decode";
 
-import { login } from "../api";
+import { login, signup } from "../api";
 import { AuthContext } from "../providers/AuthProvider";
 import { LOCAL_KEY } from "../utils";
 
@@ -44,7 +44,20 @@ export const useProvideState = () => {
         toast.success("Logged out sucessfully");
     }
 
-    const signUp = () => {}
+    const signUp = async (name, email, password, confirmPassword, toastID) => {
+        const response = await signup(name, email, password, confirmPassword);
+
+        if (response.success){            
+            // updating notification
+            toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true});
+        }
+        else{
+            // updating notification
+            toast.update(toastID, { render: response.message, type: "warning", isLoading: false, closeButton: true, autoClose: true });
+        }
+
+        return response;
+    }
 
     return {
         user,

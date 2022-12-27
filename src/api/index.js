@@ -38,3 +38,10 @@ export const login = (email, password) => {
         body: getFormBody({email, password})
     });
 }
+
+export const signup = (name, email, password, confirm_password) => {
+    return customFetch(API_URLS.signup(), { 
+        method: "POST",
+        body: getFormBody({name, email, password, confirm_password})
+    });
+}
