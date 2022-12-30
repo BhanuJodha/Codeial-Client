@@ -1,25 +1,35 @@
 import { useEffect, useState } from "react";
-import { getPost } from "../api";
-import { Post, Loader } from "../components";
+import { Post, Loader, FriendsList, CreatePost } from "../components";
+import { useAuth, usePosts } from "../hooks";
+
+import styles from "../styles/home.module.css";
 
 const Home = () => {
-    const [posts, setPosts] = useState([]);
-    const [loader, setLoader] = useState(true);
+    // Local loader for rendering home
+    const [localLoader, setLocalLoader] = useState(true);
+
+    const {loader, posts} = usePosts();
+    const auth = useAuth();
+
     useEffect(() => {
-        getPost(1, 50).then((data) => {
-            setPosts(data.data.posts);
-            setLoader(false);
-        })
+        setLocalLoader(false);
     }, [])
 
-    if (loader) {
+    if (loader || localLoader) {
         return <div>
             <Loader />
         </div>
     }
 
-    return <div style={{margin: "auto", width: "60%"}}>
-        {posts.map(post => <Post post={post} key={post._id} />)}
+    return <div className={styles.home}>
+        <div className={styles.postsList}>
+            <CreatePost />
+            {posts.map(post => <Post post={post} key={post._id} />)}
+        </div>
+
+        {auth.user && 
+            <FriendsList />
+        }
     </div>
 }
 

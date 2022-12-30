@@ -7,16 +7,19 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import App from './components/App';
 import "./styles/index.css";
 import { AuthProvider } from './providers/AuthProvider';
+import { PostsProvider } from './providers/PostsProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <PostsProvider>
+        <App />
+      </PostsProvider>
     </AuthProvider>
 
     {/* Notification services */}
-    <ToastContainer autoClose={5000} style={{marginBlockStart: "50px"}} newestOnTop={true} position={'top-right'}/>
+    <ToastContainer autoClose={5000} style={{ marginBlockStart: "50px" }} newestOnTop={true} position={'top-right'} />
   </React.StrictMode>
 );
 

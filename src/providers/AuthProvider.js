@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { useProvideState } from "../hooks";
+import { useAuthProvideState } from "../hooks";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const state = useProvideState();
+    const state = useAuthProvideState();
 
     return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }

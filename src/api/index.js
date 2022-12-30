@@ -73,6 +73,13 @@ export const fetchFriends = () => {
 
 export const removeFriendship = (userId) => {
     return customFetch(API_URLS.removeFriend(userId), { 
-        method: "Post"
+        method: "POST"
+    });
+}
+
+export const createPost = (content) => {
+    return customFetch(API_URLS.createPost(), { 
+        method: "POST",
+        body: getFormBody({content})
     });
 }

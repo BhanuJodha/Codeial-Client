@@ -14,11 +14,16 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const { userId } = useParams();
     const auth = useAuth();
-    
+
+    // Check if the user is not same as login user
+    if (userId === auth.user._id) {
+        navigate("/setting", { replace: true });
+    }
+
     const checkFriendship = () => {
         return auth.user.friendships.find((e) => e.to_user._id === userId);
     };
-    
+
     useEffect(() => {
         const getUser = async () => {
             const response = await fetchUser(userId);

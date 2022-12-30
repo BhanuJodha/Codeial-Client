@@ -2,11 +2,12 @@ import { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import jwt from "jwt-decode";
 
-import { login, signup, editUser as editUserApi, addFriend, fetchFriends, removeFriendship } from "../api";
+import { login, signup, editUser as editUserApi, addFriend, fetchFriends, removeFriendship, getPost, createPost } from "../api";
 import { AuthContext } from "../providers/AuthProvider";
 import { LOCAL_KEY } from "../utils";
+import { PostsContext } from "../providers/PostsProvider";
 
-export const useProvideState = () => {
+export const useAuthProvideState = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -31,10 +32,15 @@ export const useProvideState = () => {
         const response = await login(email, password);
 
         if (response.success) {
-            // setting user in global context
-            setUser(jwt(response.data.token));
             // setting user in local storage
             localStorage.setItem(LOCAL_KEY, response.data.token);
+            // setting user in global context
+            const responseUser = jwt(response.data.token);
+            const friendsResponse = await fetchFriends();
+            if (friendsResponse.success) {
+                responseUser.friendships = friendsResponse.data.friends;
+            }
+            setUser(responseUser);
             // updating notification
             toast.update(toastID, { render: "Login successfull", type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
@@ -134,4 +140,39 @@ export const useProvideState = () => {
 
 export const useAuth = () => {
     return useContext(AuthContext);
+}
+
+export const usePostsProvideState = () => {
+    const [posts, setPosts] = useState([]);
+    const [loader, setLoader] = useState(true);
+
+    useEffect(() => {
+        getPost(1, 100).then((data) => {
+            setPosts(data.data.posts);
+            setLoader(false);
+        })
+    }, [])
+
+    
+    const addPost = async (content, toastID) => {
+        const response = await createPost(content);
+        if (response.success) {
+            setPosts([response.data.post, ...posts]);
+            toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
+        }
+        else {
+            toast.update(toastID, { render: response.message, type: "warning", isLoading: false, closeButton: true, autoClose: true });
+        }
+        return response;
+    }
+
+    return {
+        posts,
+        loader,
+        addPost
+    }
+}
+
+export const usePosts = () => {
+    return useContext(PostsContext);
 }
