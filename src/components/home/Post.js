@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePosts } from "../../hooks";
+import moment from "moment/moment";
+
 import styles from "../../styles/home.module.css";
 import Comment from "./Comment";
 
@@ -32,7 +34,7 @@ const Post = (props) => {
                 </Link>
                 <div>
                     <span className={styles.postAuthor}>{post.user.name}</span>
-                    <span className={styles.postTime}>a minute ago</span>
+                    <span className={styles.postTime}>{moment(new Date(post.createdAt)).fromNow()}</span>
                 </div>
             </div>
             <div className={styles.postContent}>{post.content}</div>

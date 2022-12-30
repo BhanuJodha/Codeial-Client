@@ -102,13 +102,13 @@
   text-decoration: none;
   color: black;
 }
-.searchResultsRow {
+.searchResultsRow > a {
   display: flex;
   align-items: center;
   padding: 9px 14px;
 }
 .searchResultsRow:hover {
-  background-color: #eceffa;
+  background-color: #F3E5F5;
   cursor: pointer;
 }
 .searchResultsRow img {

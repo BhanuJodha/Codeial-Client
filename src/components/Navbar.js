@@ -1,9 +1,28 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
+import { useEffect, useState } from 'react';
+
 import styles from '../styles/navbar.module.css';
 import codialLogo from '../assets/images/Codial-new.png';
+import { searchUser } from '../api';
 
 const Navbar = () => {
+  const [results, setResults] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      if (searchText.length > 2) {
+        const response = await searchUser(searchText);
+        if (response.success) {
+          setResults(response.data.users);
+        }
+      }
+      else
+        setResults([]);
+    })()
+  }, [searchText]);
+
   const auth = useAuth();
 
   return (
@@ -17,6 +36,43 @@ const Navbar = () => {
           />
         </Link>
       </div>
+
+      {auth.user &&
+        <div className={styles.searchContainer}>
+          <img
+            className={styles.searchIcon}
+            src="https://cdn-icons-png.flaticon.com/512/2652/2652234.png"
+            alt="Search icon"
+          />
+
+          <input
+            placeholder="Search users"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+
+          {results.length > 0 && (
+            <div className={styles.searchResults} onClick={() => { setResults([]) }}>
+              <ul>
+                {results.map((user) => (
+                  <li
+                    className={styles.searchResultsRow}
+                    key={`user-${user._id}`}
+                  >
+                    <Link to={`/user/${user._id}`}>
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                        alt=""
+                      />
+                      <span>{user.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      }
 
       <div className={styles.rightNav}>
         {auth.user &&
@@ -38,7 +94,7 @@ const Navbar = () => {
               <li>
                 <Link onClick={auth.logOut}>Log out</Link>
               </li>
-            :
+              :
               <>
                 <li>
                   <Link to="/login">Log in</Link>

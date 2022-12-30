@@ -33,7 +33,7 @@ const CreatePost = () => {
                     onClick={handleAddPostClick}
                     disabled={addingPost}
                 >
-                    {addingPost ? 'Posting...' : 'Add Post'}
+                    {addingPost ? 'Posting...' : 'Post'}
                 </button>
             </div>
         </div>

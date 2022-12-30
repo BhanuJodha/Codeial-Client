@@ -147,7 +147,7 @@ export const usePostsProvideState = () => {
     const [loader, setLoader] = useState(true);
 
     useEffect(() => {
-        getPost(1, 100).then((data) => {
+        getPost(1, 30).then((data) => {
             setPosts(data.data.posts);
             setLoader(false);
         })

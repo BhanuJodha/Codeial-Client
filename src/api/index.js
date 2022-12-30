@@ -90,3 +90,9 @@ export const createComment = (post_id, content) => {
         body: getFormBody({post_id, content})
     });
 }
+
+export const searchUser = (text) => {
+    return customFetch(API_URLS.searchUsers(text), { 
+        method: "GET"
+    });
+}

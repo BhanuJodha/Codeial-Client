@@ -23,7 +23,7 @@ const Home = () => {
 
     return <div className={styles.home}>
         <div className={styles.postsList}>
-            <CreatePost />
+            {auth.user && <CreatePost />}
             {posts.map(post => <Post post={post} key={post._id} />)}
         </div>
 

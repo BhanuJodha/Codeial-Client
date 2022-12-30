@@ -9,7 +9,7 @@ const FriendsList = () => {
 
     return (
         <div className={styles.friendsList}>
-            <div className={styles.header}>Friends</div>
+            <div className={styles.header}>Friend List</div>
 
             {(friendships.length === 0
                 && (
