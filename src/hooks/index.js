@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import jwt from "jwt-decode";
 
-import { login, signup, editUser as editUserApi, addFriend, fetchFriends, removeFriendship, getPost, createPost } from "../api";
+import { login, signup, editUser as editUserApi, addFriend, fetchFriends, removeFriendship, getPost, createPost, createComment } from "../api";
 import { AuthContext } from "../providers/AuthProvider";
 import { LOCAL_KEY } from "../utils";
 import { PostsContext } from "../providers/PostsProvider";
@@ -157,7 +157,22 @@ export const usePostsProvideState = () => {
     const addPost = async (content, toastID) => {
         const response = await createPost(content);
         if (response.success) {
+            // adding new post to existing one
             setPosts([response.data.post, ...posts]);
+            toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
+        }
+        else {
+            toast.update(toastID, { render: response.message, type: "warning", isLoading: false, closeButton: true, autoClose: true });
+        }
+        return response;
+    }
+
+    const addComment = async (post, content, toastID) => {
+        const response = await createComment(post._id, content);
+        if (response.success) {
+            // post.comments = [response.data.comment, ...post.comments];
+            post.comments.unshift(response.data.comment);
+            setPosts(posts);
             toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
         else {
@@ -169,7 +184,8 @@ export const usePostsProvideState = () => {
     return {
         posts,
         loader,
-        addPost
+        addPost,
+        addComment
     }
 }
 

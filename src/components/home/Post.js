@@ -1,9 +1,25 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { usePosts } from "../../hooks";
 import styles from "../../styles/home.module.css";
 import Comment from "./Comment";
 
 const Post = (props) => {
+    const [commentBox, setCommentBox] = useState("");
+    const [loading, setloading] = useState(false);
+
     const { post } = props;
+    const {addComment: createComment} = usePosts();
+
+    const addComment = async () => {
+        setloading(true);
+        const toastID = toast.loading("Adding comment...");
+        const response = await createComment(post, commentBox, toastID);
+        if (response.success)
+            setCommentBox("");
+        setloading(false);
+    }
 
     return <div className={styles.postWrapper}>
         <div className={styles.postHeader}>
@@ -39,7 +55,12 @@ const Post = (props) => {
                 </div>
             </div>
             <div className={styles.postCommentBox}>
-                <input placeholder="Start typing comment here..." />
+                <input
+                    placeholder="Start typing comment here..."
+                    value={commentBox}
+                    onKeyDown={(e) => { e.key === "Enter" && addComment() }}
+                    onChange={(e) => setCommentBox(e.target.value)}
+                    disabled={loading} />
             </div>
 
             <div className={styles.postCommentsList}>

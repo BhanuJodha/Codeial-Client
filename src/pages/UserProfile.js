@@ -15,28 +15,29 @@ const UserProfile = () => {
     const { userId } = useParams();
     const auth = useAuth();
 
-    // Check if the user is not same as login user
-    if (userId === auth.user._id) {
-        navigate("/setting", { replace: true });
-    }
-
     const checkFriendship = () => {
         return auth.user.friendships.find((e) => e.to_user._id === userId);
     };
 
     useEffect(() => {
-        const getUser = async () => {
-            const response = await fetchUser(userId);
-            if (response.success) {
-                setUser(response.data.user);
-                setLoading(false);
+        const getUser = async () => {            
+            // Check if the user is not same as login user
+            if (userId === auth.user._id) {
+                navigate("/setting", { replace: true });
             }
             else {
-                navigate("/", { replace: true });
+                const response = await fetchUser(userId);
+                if (response.success) {
+                    setUser(response.data.user);
+                    setLoading(false);
+                }
+                else {
+                    navigate("/", { replace: true });
+                }
             }
         };
         getUser();
-    }, [navigate, userId]);
+    }, [navigate, userId, auth]);
 
     // Add a friend
     const addFriend = async () => {

@@ -21,6 +21,7 @@ const CreatePost = () => {
     return (
         <div className={styles.createPost}>
             <textarea
+                placeholder='Post a new thread...'
                 className={styles.addPost}
                 value={post}
                 onChange={(e) => setPost(e.target.value)}
