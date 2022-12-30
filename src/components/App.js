@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "../hooks";
 
-import { Home, Login, Page404, Setting, Signup } from "../pages";
+import { Home, Login, Page404, Setting, Signup, UserProfile } from "../pages";
 import { PrivateRoute, PublicRoute } from "../utils";
 import Loader from "./Loader";
 import Navbar from "./Navbar";
@@ -23,6 +23,7 @@ function App() {
           <Route exact path="/setting" element={<PrivateRoute element={<Setting />} />} />
           <Route exact path="/login" element={<PublicRoute element={<Login />} />} />
           <Route exact path="/signup" element={<PublicRoute element={<Signup />} />} />
+          <Route exact path="/user/:userId" element={<PrivateRoute element={<UserProfile />} />} />
           <Route exact path="/Page404" element={<Page404 />} />
 
           <Route path="/*" element={<Navigate to="/Page404" />} />

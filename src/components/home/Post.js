@@ -1,17 +1,20 @@
+import { Link } from "react-router-dom";
 import styles from "../../styles/home.module.css";
 import Comment from "./Comment";
 
 const Post = (props) => {
     const { post } = props;
-    
+
     return <div className={styles.postsList}>
         <div className={styles.postWrapper}>
             <div className={styles.postHeader}>
                 <div className={styles.postAvatar}>
-                    <img
-                        src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
-                        alt="user-pic"
-                    />
+                    <Link to={`/user/${post.user._id}`}>
+                        <img
+                            src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                            alt="user-pic"
+                        />
+                    </Link>
                     <div>
                         <span className={styles.postAuthor}>{post.user.name}</span>
                         <span className={styles.postTime}>a minute ago</span>

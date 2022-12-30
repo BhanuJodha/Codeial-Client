@@ -36,12 +36,12 @@
   outline: none;
 }
 .settings .editBtn {
-  border: 1px solid #ef7917;
+  border: 1px solid #FF7043;
   box-sizing: border-box;
-  color: #ef7917;
+  color: #FF7043;
 }
 .settings .saveBtn {
-  background: #ef7917;
+  background: #FF7043;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -51,7 +51,7 @@
   cursor: not-allowed;
 }
 .settings .goBack {
-  color: #ef7917;
+  color: #FF7043;
   margin-top: 7px;
   font-size: 13px;
   text-decoration: none;

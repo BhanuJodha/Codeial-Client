@@ -52,3 +52,27 @@ export const editUser = (id, name, password, confirm_password) => {
         body: getFormBody({id, name, password, confirm_password})
     });
 }
+
+export const fetchUser = (userId) => {
+    return customFetch(API_URLS.userInfo(userId), { 
+        method: "GET"
+    });
+}
+
+export const addFriend = (userId) => {
+    return customFetch(API_URLS.createFriendship(userId), { 
+        method: "POST"
+    });
+}
+
+export const fetchFriends = () => {
+    return customFetch(API_URLS.friends(), { 
+        method: "GET"
+    });
+}
+
+export const removeFriendship = (userId) => {
+    return customFetch(API_URLS.removeFriend(userId), { 
+        method: "Post"
+    });
+}

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import styles from '../styles/navbar.module.css';
-import codialLogo from '../images/Codial-new.png';
+import codialLogo from '../assets/images/Codial-new.png';
 
 const Navbar = () => {
   const auth = useAuth();

@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks';
 import styles from '../styles/login.module.css';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  // fetching signup email
+  const location = useLocation();
+
+  const [email, setEmail] = useState(location.state ? location.state.email : "");
   const [password, setPassword] = useState("");
   const [logging, setLogging] = useState(false);
 
