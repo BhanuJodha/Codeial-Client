@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/navbar.module.css';
 import codialLogo from '../assets/images/Codial-new.png';
 import { searchUser } from '../api';
+import { API_ORIGIN } from '../utils';
 
 const Navbar = () => {
   const [results, setResults] = useState([]);
@@ -61,7 +62,7 @@ const Navbar = () => {
                   >
                     <Link to={`/user/${user._id}`}>
                       <img
-                        src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                        src={API_ORIGIN + user.avatar}
                         alt=""
                       />
                       <span>{user.name}</span>
@@ -79,7 +80,7 @@ const Navbar = () => {
           <div className={styles.user}>
             <Link to="/setting">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                src={API_ORIGIN + auth.user.avatar}
                 alt=""
                 className={styles.userDp}
               />

@@ -59,20 +59,20 @@ export const fetchUser = (userId) => {
     });
 }
 
-export const addFriend = (userId) => {
-    return customFetch(API_URLS.createFriendship(userId), { 
+export const addFollow = (userId) => {
+    return customFetch(API_URLS.addFollow(userId), { 
         method: "POST"
     });
 }
 
-export const fetchFriends = () => {
-    return customFetch(API_URLS.friends(), { 
+export const fetchFollowing = () => {
+    return customFetch(API_URLS.following(), { 
         method: "GET"
     });
 }
 
-export const removeFriendship = (userId) => {
-    return customFetch(API_URLS.removeFriend(userId), { 
+export const removeFollow = (userId) => {
+    return customFetch(API_URLS.removeFollow(userId), { 
         method: "POST"
     });
 }

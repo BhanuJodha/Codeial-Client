@@ -5,6 +5,7 @@ import { fetchUser } from "../api";
 import { Loader } from "../components";
 import { useAuth } from "../hooks";
 import styles from "../styles/settings.module.css";
+import { API_ORIGIN } from "../utils";
 
 const UserProfile = () => {
     const [user, setUser] = useState({});
@@ -15,8 +16,8 @@ const UserProfile = () => {
     const { userId } = useParams();
     const auth = useAuth();
 
-    const checkFriendship = () => {
-        return auth.user.friendships.find((e) => e.to_user._id === userId);
+    const checkFollowing = () => {
+        return auth.user.following.find((e) => e.to_user._id === userId);
     };
 
     useEffect(() => {
@@ -40,18 +41,18 @@ const UserProfile = () => {
     }, [navigate, userId, auth]);
 
     // Add a friend
-    const addFriend = async () => {
-        const toastID = toast.loading("Adding friend...");
+    const addFollowing = async () => {
+        const toastID = toast.loading("Following...");
         setFriendApi(true);
-        await auth.createFriendship(userId, toastID);
+        await auth.createFollowing(userId, toastID);
         setFriendApi(false);
     }
 
     // Remove a friend
-    const removeFriendship = async () => {
-        const toastID = toast.loading("Removing friend...");
+    const removeFollowing = async () => {
+        const toastID = toast.loading("Unfollowing...");
         setFriendApi(true);
-        await auth.removeFriend(userId, toastID);
+        await auth.removeFollowing(userId, toastID);
         setFriendApi(false);
     }
 
@@ -65,7 +66,7 @@ const UserProfile = () => {
             <Link to="/" className={styles.goBack}>Home</Link>
             <div className={styles.imgContainer}>
                 <img
-                    src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                    src={API_ORIGIN + user.avatar}
                     alt=""
                 />
             </div>
@@ -80,13 +81,13 @@ const UserProfile = () => {
                 <div className={styles.fieldValue}>{user.name}</div>
             </div>
 
-            {checkFriendship() ?
+            {checkFollowing() ?
                 <div className={styles.btnGrp}>
-                    <button className={`button ${styles.saveBtn}`} onClick={removeFriendship} disabled={friendApi}>{friendApi ? "Removing..." : "Remove Friend"}</button>
+                    <button className={`button ${styles.saveBtn}`} onClick={removeFollowing} disabled={friendApi}>{friendApi ? "Removing..." : "Unfollow"}</button>
                 </div>
                 :
                 <div className={styles.btnGrp}>
-                    <button className={`button ${styles.saveBtn}`} onClick={addFriend} disabled={friendApi}>{friendApi ? "Adding..." : "Add Friend"}</button>
+                    <button className={`button ${styles.saveBtn}`} onClick={addFollowing} disabled={friendApi}>{friendApi ? "Adding..." : "Follow"}</button>
                 </div>
             }
         </div>

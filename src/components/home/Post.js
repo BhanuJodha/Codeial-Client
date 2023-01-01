@@ -6,6 +6,7 @@ import moment from "moment/moment";
 
 import styles from "../../styles/home.module.css";
 import Comment from "./Comment";
+import { API_ORIGIN } from "../../utils";
 
 const Post = (props) => {
     const [commentBox, setCommentBox] = useState("");
@@ -28,7 +29,7 @@ const Post = (props) => {
             <div className={styles.postAvatar}>
                 <Link to={`/user/${post.user._id}`}>
                     <img
-                        src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                        src={API_ORIGIN + post.user.avatar}
                         alt="user-pic"
                     />
                 </Link>

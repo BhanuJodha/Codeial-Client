@@ -16,6 +16,7 @@
   justify-content: center;
 }
 .settings .imgContainer img {
+  border-radius: 4px;
   height: 100px;
 }
 .settings .btnGrp {

@@ -2,25 +2,26 @@ import { Link } from 'react-router-dom';
 
 import styles from '../../styles/home.module.css';
 import { useAuth } from '../../hooks';
+import { API_ORIGIN } from '../../utils';
 
-const FriendsList = () => {
+const FollowingList = () => {
     const auth = useAuth();
-    const { friendships } = auth.user;
+    const { following } = auth.user;
 
     return (
         <div className={styles.friendsList}>
-            <div className={styles.header}>Friend List</div>
+            <div className={styles.header}>Following List</div>
 
-            {(friendships.length === 0
+            {(following.length === 0
                 && (
-                    <div className={styles.noFriends}>NO friends found!</div>
+                    <div className={styles.noFriends}>NO following found!</div>
                 ))
                 || (
-                    friendships.map((friend) => (
+                    following.map((friend) => (
                         <div key={friend._id}>
                             <Link className={styles.friendsItem} to={`/user/${friend.to_user._id}`}>
                                 <img
-                                    src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                                    src={API_ORIGIN + friend.to_user.avatar}
                                     alt="user-pic"
                                 />
                                 <div className={styles.friendsName}>{friend.to_user.name}</div>
@@ -33,4 +34,4 @@ const FriendsList = () => {
     );
 };
 
-export default FriendsList;
+export default FollowingList;

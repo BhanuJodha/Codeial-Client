@@ -2,7 +2,7 @@ import Loader from "./Loader";
 import Post from "./home/Post";
 import Comment from "./home/Comment";
 import Navbar from "./Navbar";
-import FriendsList from "./home/FriendsList";
+import FollowingList from "./home/FollowingList";
 import CreatePost from "./home/CreatePost";
 
 export {
@@ -10,6 +10,6 @@ export {
     Post,
     Comment,
     Navbar,
-    FriendsList,
+    FollowingList,
     CreatePost
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Post, Loader, FriendsList, CreatePost } from "../components";
+import { Post, Loader, FollowingList, CreatePost } from "../components";
 import { useAuth, usePosts } from "../hooks";
 
 import styles from "../styles/home.module.css";
@@ -28,7 +28,7 @@ const Home = () => {
         </div>
 
         {auth.user && 
-            <FriendsList />
+            <FollowingList />
         }
     </div>
 }

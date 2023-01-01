@@ -2,31 +2,28 @@ import { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import jwt from "jwt-decode";
 
-import { login, signup, editUser as editUserApi, addFriend, fetchFriends, removeFriendship, getPost, createPost, createComment } from "../api";
+import { login, signup, editUser as editUserApi, addFollow, removeFollow, getPost, createPost, createComment, fetchFollowing } from "../api";
 import { AuthContext } from "../providers/AuthProvider";
 import { LOCAL_KEY } from "../utils";
 import { PostsContext } from "../providers/PostsProvider";
 
 export const useAuthProvideState = () => {
+    const [token, setToken] = useState(localStorage.getItem(LOCAL_KEY));
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // Adding user if exist
     useEffect(() => {
         (async () => {
-            const token = localStorage.getItem(LOCAL_KEY);
-            // if token exist
             if (token) {
                 const user = jwt(token);
-                const response = await fetchFriends();
-                if (response.success) {
-                    user.friendships = response.data.friends;
-                }
+                const response = await fetchFollowing();
+                user.following = response.data.following;
                 setUser(user);
             }
             setLoading(false);
         })();
-    }, [])
+    }, [token])
 
     const logIn = async (email, password, toastID) => {
         const response = await login(email, password);
@@ -34,13 +31,8 @@ export const useAuthProvideState = () => {
         if (response.success) {
             // setting user in local storage
             localStorage.setItem(LOCAL_KEY, response.data.token);
-            // setting user in global context
-            const responseUser = jwt(response.data.token);
-            const friendsResponse = await fetchFriends();
-            if (friendsResponse.success) {
-                responseUser.friendships = friendsResponse.data.friends;
-            }
-            setUser(responseUser);
+            // setting token in state then useEffect sets the user
+            setToken(response.data.token);
             // updating notification
             toast.update(toastID, { render: "Login successfull", type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
@@ -55,6 +47,7 @@ export const useAuthProvideState = () => {
     const logOut = () => {
         setUser(null);
         localStorage.removeItem(LOCAL_KEY);
+        setToken(null);
         toast.success("Logged out sucessfully");
     }
 
@@ -77,13 +70,10 @@ export const useAuthProvideState = () => {
         const response = await editUserApi(user._id, name, password, confirmPassword);
 
         if (response.success) {
-            if (response.data.token) {
-                // setting updated user in global context with existing friendships
-                setUser({friendships: user.friendships, ...response.data.user});
-                // setting updated user in local storage
-                localStorage.setItem(LOCAL_KEY, response.data.token);
-                // updating notification
-            }
+            localStorage.setItem(LOCAL_KEY, response.data.token);
+            // setting token in state then useEffect sets the user
+            setToken(response.data.token);
+            // updating notification
             toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
         else {
@@ -94,11 +84,11 @@ export const useAuthProvideState = () => {
         return response;
     }
 
-    const createFriendship = async (userId, toastID) => {
-        const response = await addFriend(userId);
+    const createFollowing = async (userId, toastID) => {
+        const response = await addFollow(userId);
 
-        if (response.success) {    
-            user.friendships.push(response.data.friendship);
+        if (response.success) {
+            user.following.push(response.data.follow);
             setUser(user);
             toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
@@ -110,11 +100,11 @@ export const useAuthProvideState = () => {
         return response;
     }
 
-    const removeFriend = async (userId, toastID) => {
-        const response = await removeFriendship(userId);
+    const removeFollowing = async (userId, toastID) => {
+        const response = await removeFollow(userId);
 
-        if (response.success) {            
-            user.friendships = user.friendships.filter((e) => userId !== e.to_user._id);
+        if (response.success) {
+            user.following = user.following.filter((e) => userId !== e.to_user._id);
             setUser(user);
             toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
@@ -133,8 +123,8 @@ export const useAuthProvideState = () => {
         logOut,
         signUp,
         editUser,
-        createFriendship,
-        removeFriend
+        createFollowing,
+        removeFollowing
     }
 }
 
@@ -153,7 +143,7 @@ export const usePostsProvideState = () => {
         })
     }, [])
 
-    
+
     const addPost = async (content, toastID) => {
         const response = await createPost(content);
         if (response.success) {
