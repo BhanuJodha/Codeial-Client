@@ -1,11 +1,13 @@
 import { API_URLS, getFormBody, LOCAL_KEY } from "../utils";
 
-const customFetch = async (url, { ...config }) => {
+const customFetch = async (url, { ...config }, removeContentType) => {
     config.headers = {
-        "content-type": "application/x-www-form-urlencoded",
         Accept: "json/application"
     }
-
+    if (!removeContentType) {
+        config.headers["content-type"] = "application/x-www-form-urlencoded";
+    }
+    
     // stringify body
     // if (config.body)
     //     config.body = JSON.stringify(config.body);
@@ -33,84 +35,93 @@ export const getPost = (page, limit) => {
 }
 
 export const login = (email, password) => {
-    return customFetch(API_URLS.login(), { 
+    return customFetch(API_URLS.login(), {
         method: "POST",
-        body: getFormBody({email, password})
+        body: getFormBody({ email, password })
     });
 }
 
 export const signup = (name, email, password, confirm_password) => {
-    return customFetch(API_URLS.signup(), { 
+    return customFetch(API_URLS.signup(), {
         method: "POST",
-        body: getFormBody({name, email, password, confirm_password})
+        body: getFormBody({ name, email, password, confirm_password })
     });
 }
 
-export const editUser = (id, name, password, confirm_password) => {
-    return customFetch(API_URLS.editUser(), { 
+export const editUser = (id, name, password, confirm_password, avatar) => {
+    return customFetch(API_URLS.editUser(), {
         method: "POST",
-        body: getFormBody({id, name, password, confirm_password})
-    });
+        body: (() => {
+            const fd = new FormData();
+            id && fd.append("id", id);
+            name && fd.append("name", name);
+            password && fd.append("password", password);
+            confirm_password && fd.append("confirm_password", confirm_password);
+            avatar && fd.append("avatar", avatar);
+            return fd;
+        })()
+    },
+        true);
 }
 
 export const fetchUser = (userId) => {
-    return customFetch(API_URLS.userInfo(userId), { 
+    return customFetch(API_URLS.userInfo(userId), {
         method: "GET"
     });
 }
 
 export const addFollow = (userId) => {
-    return customFetch(API_URLS.addFollow(userId), { 
+    return customFetch(API_URLS.addFollow(userId), {
         method: "POST"
     });
 }
 
 export const fetchFollowing = () => {
-    return customFetch(API_URLS.following(), { 
+    return customFetch(API_URLS.following(), {
         method: "GET"
     });
 }
 
 export const removeFollow = (userId) => {
-    return customFetch(API_URLS.removeFollow(userId), { 
+    return customFetch(API_URLS.removeFollow(userId), {
         method: "POST"
     });
 }
 
 export const createPost = (content) => {
-    return customFetch(API_URLS.createPost(), { 
+    return customFetch(API_URLS.createPost(), {
         method: "POST",
-        body: getFormBody({content})
+        body: getFormBody({ content })
     });
 }
 
 export const deletePost = (post_id) => {
-    return customFetch(API_URLS.deletePost(post_id), { 
+    return customFetch(API_URLS.deletePost(post_id), {
         method: "DELETE"
     });
 }
 
 export const createComment = (post_id, content) => {
-    return customFetch(API_URLS.comment(), { 
+    return customFetch(API_URLS.comment(), {
         method: "POST",
-        body: getFormBody({post_id, content})
+        body: getFormBody({ post_id, content })
     });
 }
 
 export const deleteComment = (comment_id, content) => {
-    return customFetch(API_URLS.deleteComment(comment_id), { 
+    return customFetch(API_URLS.deleteComment(comment_id), {
         method: "DELETE"
     });
 }
 
 export const searchUser = (text) => {
-    return customFetch(API_URLS.searchUsers(text), { 
+    return customFetch(API_URLS.searchUsers(text), {
         method: "GET"
     });
 }
 
 export const toggleLike = (id, onModel) => {
-    return customFetch(API_URLS.toggleLike(id, onModel), { 
+    return customFetch(API_URLS.toggleLike(id, onModel), {
         method: "GET"
     });
 }

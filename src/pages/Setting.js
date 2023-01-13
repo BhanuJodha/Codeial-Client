@@ -4,22 +4,24 @@ import { toast } from "react-toastify";
 
 import { useAuth } from "../hooks";
 import styles from "../styles/settings.module.css";
+import { API_ORIGIN } from "../utils";
 
 const Setting = () => {
     const auth = useAuth();
-    
+
     const [editMode, setEditMode] = useState(false);
-    const [name, setName] = useState(auth.user ? auth.user.name :"");
+    const [name, setName] = useState(auth.user ? auth.user.name : "");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [avatar, setAvatar] = useState(null);
     const [saving, setSaving] = useState(false);
 
     const saveChanges = async () => {
         if (!saving) {
             setSaving(true);
             const toastID = toast.loading("Saving...");
-            
-            const response = await auth.editUser(name, password, confirmPassword, toastID);
+
+            const response = await auth.editUser(name, password, confirmPassword, avatar, toastID);
             // If success then reset form
             if (response.success) {
                 setPassword("");
@@ -32,11 +34,11 @@ const Setting = () => {
     }
 
     return (
-        <div className={styles.settings}>            
+        <div className={styles.settings}>
             <Link to="/" className={styles.goBack}>Home</Link>
             <div className={styles.imgContainer}>
                 <img
-                    src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png"
+                    src={API_ORIGIN + auth.user.avatar}
                     alt=""
                 />
             </div>
@@ -63,17 +65,22 @@ const Setting = () => {
                 <>
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Name</div>
-                        <input type={"text"} value={name} onChange={(e) => setName(e.target.value)} disabled={saving}/>
+                        <input type={"text"} value={name} onChange={(e) => setName(e.target.value)} disabled={saving} />
+                    </div>
+
+                    <div className={styles.field}>
+                        <div className={styles.fieldLabel}>Profile Picture</div>
+                            <input type="file" name="avatar" onChange={(e) => setAvatar(e.target.files[0])} id="fileUpload" />
                     </div>
 
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Password</div>
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} disabled={saving}/>
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} disabled={saving} />
                     </div>
 
                     <div className={styles.field}>
                         <div className={styles.fieldLabel}>Confirm Password</div>
-                        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={saving}/>
+                        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={saving} />
                     </div>
 
                     <div className={styles.btnGrp}>

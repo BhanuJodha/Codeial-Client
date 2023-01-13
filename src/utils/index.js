@@ -20,7 +20,7 @@ export const PrivateRoute = ({element}) => {
         return element;
     }
 
-    return <Navigate to="/"/>
+    return <Navigate to="/login"/>
 }
 
 export const PublicRoute = ({element}) => {

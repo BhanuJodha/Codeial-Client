@@ -19,7 +19,7 @@ const Comment = (props) => {
         <div className={styles.postCommentContent}>{comment.content}</div>
         <div className={styles.commentLike}>
             <img
-                src={(comment.likes.find(like => like.user === auth.user._id) &&
+                src={(auth.user && comment.likes.find(like => like.user === auth.user._id) &&
                     "https://cdn-icons-png.flaticon.com/512/210/210545.png")
                     ||
                     "https://cdn-icons-png.flaticon.com/512/833/833300.png"

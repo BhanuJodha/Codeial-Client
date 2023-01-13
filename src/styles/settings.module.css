@@ -81,3 +81,22 @@
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 6px;
 }
+input[type=file]::file-selector-button {
+  background-color: #fff;
+  color: #000;
+  border: 0px;
+  border-right: 1px solid #e5e5e5;
+  border-radius: 6px 0 0 6px;
+  padding: 10px 15px;
+  margin-right: 20px;
+  margin-left: -10px;
+  transition: .1s;
+}
+
+input[type=file]::file-selector-button:hover {
+  cursor: pointer;
+  color: #FF7043;
+  background-color: #F5F5F5;
+  border: 0px;
+  border-right: 1px solid #FF7043;
+}

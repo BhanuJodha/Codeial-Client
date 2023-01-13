@@ -64,8 +64,8 @@ export const useAuthProvideState = () => {
         return response;
     }
 
-    const editUser = async (name, password, confirmPassword, toastID) => {
-        const response = await editUserApi(user._id, name, password, confirmPassword);
+    const editUser = async (name, password, confirmPassword, avatar, toastID) => {
+        const response = await editUserApi(user._id, name, password, confirmPassword, avatar);
 
         if (response.success) {
             localStorage.setItem(LOCAL_KEY, response.data.token);

@@ -17,18 +17,18 @@ const Signup = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!signingUp) {
             setSigningUp(true);
-    
+
             // Showing notification
             const toastID = toast.loading("Signing Up...");
             const response = await auth.signUp(name, email, password, confirmPassword, toastID);
 
             // Redirecting the user to login page
             if (response.success)
-                navigate("/login", {state: {email}});
-    
+                navigate("/login", { state: { email } });
+
             setSigningUp(false);
         }
     }
@@ -79,6 +79,10 @@ const Signup = () => {
                 <button disabled={signingUp}>
                     {signingUp ? 'Signing up...' : 'Sign Up'}
                 </button>
+                <div className={styles.divider}>
+                    <span>OR</span>
+                </div>
+                <button className={styles.google} disabled={signingUp}><img src='https://cdn-icons-png.flaticon.com/512/300/300221.png' alt='google'></img> Sign In with Google</button>
             </div>
         </form>
     );

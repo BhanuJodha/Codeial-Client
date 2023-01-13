@@ -70,7 +70,7 @@ const Post = (props) => {
             <div className={styles.postActions}>
                 <div className={styles.postLike}>
                     <img
-                        src={(post.likes.find(like => like.user === auth.user._id) &&
+                        src={(auth.user && post.likes.find(like => like.user === auth.user._id) &&
                             "https://cdn-icons-png.flaticon.com/512/210/210545.png")
                             ||
                             "https://cdn-icons-png.flaticon.com/512/833/833300.png"

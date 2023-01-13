@@ -39,8 +39,13 @@ const Login = () => {
         <input type="password" placeholder="Paasword" value={password} onChange={(e) => { setPassword(e.target.value) }} required />
       </div>
 
+
       <div className={styles.field}>
         <button disabled={logging}>{logging ? "Logging In..." : "Log In"}</button>
+        <div className={styles.divider}>
+          <span>OR</span>
+        </div>
+        <button className={styles.google} disabled={logging}><img src='https://cdn-icons-png.flaticon.com/512/300/300221.png' alt='google'></img> Sign In with Google</button>
       </div>
     </form>
   );
