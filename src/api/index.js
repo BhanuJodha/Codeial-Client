@@ -84,6 +84,12 @@ export const createPost = (content) => {
     });
 }
 
+export const deletePost = (post_id) => {
+    return customFetch(API_URLS.deletePost(post_id), { 
+        method: "DELETE"
+    });
+}
+
 export const createComment = (post_id, content) => {
     return customFetch(API_URLS.comment(), { 
         method: "POST",

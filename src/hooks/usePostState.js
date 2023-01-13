@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { createComment, createPost, deleteComment, getPost } from "../api";
+import { createComment, createPost, deleteComment, deletePost, getPost } from "../api";
 
 export const usePostsProvideState = () => {
     const [posts, setPosts] = useState([]);
@@ -19,6 +19,18 @@ export const usePostsProvideState = () => {
         if (response.success) {
             // adding new post to existing one
             setPosts([response.data.post, ...posts]);
+            toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
+        }
+        else {
+            toast.update(toastID, { render: response.message, type: "warning", isLoading: false, closeButton: true, autoClose: true });
+        }
+        return response;
+    }
+
+    const removePost = async (post_id, toastID) => {
+        const response = await deletePost(post_id);
+        if (response.success) {
+            setPosts(posts.filter(post => response.data.post._id !== post._id));
             toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
         }
         else {
@@ -56,6 +68,7 @@ export const usePostsProvideState = () => {
         loader,
         addPost,
         addComment,
-        removeComment
+        removeComment,
+        removePost
     }
 }

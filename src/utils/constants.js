@@ -7,6 +7,7 @@ export const API_URLS = {
   signup: () => `${API_ROOT}/users/signup`,
   posts: (page, limit) => `${API_ROOT}/posts?page=${page}&limit=${limit}`,
   createPost: () => `${API_ROOT}/posts/create`,
+  deletePost: (post_id) => `${API_ROOT}/posts?post_id=${post_id}`,
   addFollow: (userId) =>
     `${API_ROOT}/followship/create_following?user_id=${userId}`,
   following: () => `${API_ROOT}/followship/fetch_user_following`,

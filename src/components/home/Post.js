@@ -13,7 +13,7 @@ const Post = (props) => {
     const [loading, setLoading] = useState(false);
 
     const { post } = props;
-    const { addComment: createComment, removeComment } = usePosts();
+    const { addComment: createComment, removeComment, removePost } = usePosts();
     const auth = useAuth();
 
     const addComment = async () => {
@@ -30,6 +30,15 @@ const Post = (props) => {
             setLoading(true);
             const toastID = toast.loading("Deleting comment...")
             await removeComment(post, comment_id, toastID);
+            setLoading(false);
+        }
+    }
+
+    const deletePost = async () => {
+        if (!loading) {
+            setLoading(true);
+            const toastID = toast.loading("Deleting post and associated comments...");
+            await removePost(post._id, toastID);
             setLoading(false);
         }
     }
@@ -72,6 +81,7 @@ const Post = (props) => {
                         <img
                             src="https://cdn-icons-png.flaticon.com/512/3132/3132919.png"
                             alt="delete-icon"
+                            onClick={deletePost}
                         />
                         <span>Remove</span>
                     </div>
