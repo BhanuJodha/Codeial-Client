@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { createComment, createPost, deleteComment, deletePost, getPost } from "../api";
+import { createComment, createPost, deleteComment, deletePost, getPost, toggleLike } from "../api";
 
 export const usePostsProvideState = () => {
     const [posts, setPosts] = useState([]);
@@ -63,12 +63,30 @@ export const usePostsProvideState = () => {
         return response;
     }
 
+    const like = async (reference, onModel, toastID) => {
+        const response = await toggleLike(reference._id, onModel);
+        if (response.success) {
+            if (response.data.deleted){
+                reference.likes = reference.likes.filter(like => response.data.like._id !== like._id);
+            }
+            else{
+                reference.likes.push(response.data.like)
+            }
+            toast.update(toastID, { render: response.message, type: "success", isLoading: false, closeButton: true, autoClose: true });
+        }
+        else {
+            toast.update(toastID, { render: response.message, type: "warning", isLoading: false, closeButton: true, autoClose: true });
+        }
+        return response;
+    }
+
     return {
         posts,
         loader,
         addPost,
         addComment,
         removeComment,
-        removePost
+        removePost,
+        like
     }
 }

@@ -13,7 +13,7 @@ const Post = (props) => {
     const [loading, setLoading] = useState(false);
 
     const { post } = props;
-    const { addComment: createComment, removeComment, removePost } = usePosts();
+    const { addComment: createComment, removeComment, removePost, like } = usePosts();
     const auth = useAuth();
 
     const addComment = async () => {
@@ -43,6 +43,14 @@ const Post = (props) => {
         }
     }
 
+    const toggleLike = async (reference, onModel) => {
+        if (!loading) {
+            setLoading(true);
+            await like(reference, onModel);
+            setLoading(false);
+        }
+    }
+
     return <div className={styles.postWrapper}>
         <div className={styles.postHeader}>
             <div className={styles.postAvatar}>
@@ -62,8 +70,13 @@ const Post = (props) => {
             <div className={styles.postActions}>
                 <div className={styles.postLike}>
                     <img
-                        src="https://cdn-icons-png.flaticon.com/512/833/833300.png"
+                        src={(post.likes.find(like => like.user === auth.user._id) &&
+                            "https://cdn-icons-png.flaticon.com/512/210/210545.png")
+                            ||
+                            "https://cdn-icons-png.flaticon.com/512/833/833300.png"
+                        }
                         alt="likes-icon"
+                        onClick={() => toggleLike(post, "Post")}
                     />
                     <span>{post.likes.length}</span>
                 </div>
@@ -97,7 +110,7 @@ const Post = (props) => {
             </div>
 
             <div className={styles.postCommentsList}>
-                {post.comments.map((comment) => <Comment comment={comment} post={post} deleteComment={deleteComment} key={comment._id} />)}
+                {post.comments.map((comment) => <Comment comment={comment} post={post} deleteComment={deleteComment} toggleLike={toggleLike} key={comment._id} />)}
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@ export const API_URLS = {
   removeFollow: (userId) =>
     `${API_ROOT}/followship/remove_following?user_id=${userId}`,
   toggleLike: (itemId, itemType) =>
-    `${API_ROOT}/likes/toggle?likeable_id=${itemId}&likeable_type=${itemType}`, // itemType is 'Post'/'Comment'
+    `${API_ROOT}/likes/toggle?likeable_id=${itemId}&onModel=${itemType}`, // itemType is 'Post'/'Comment'
   getLikes: (itemId, itemType) =>
     `${API_ROOT}/likes?likeable_id=${itemId}&likeable_type=${itemType}`,
   comment: () => `${API_ROOT}/comments`, // POST - create, GET - list of comments

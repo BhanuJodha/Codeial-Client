@@ -108,3 +108,9 @@ export const searchUser = (text) => {
         method: "GET"
     });
 }
+
+export const toggleLike = (id, onModel) => {
+    return customFetch(API_URLS.toggleLike(id, onModel), { 
+        method: "GET"
+    });
+}
