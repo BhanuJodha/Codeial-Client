@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePosts } from "../../hooks";
+import { usePosts, useAuth } from "../../hooks";
 import moment from "moment/moment";
 
 import styles from "../../styles/home.module.css";
@@ -10,18 +10,28 @@ import { API_ORIGIN } from "../../utils";
 
 const Post = (props) => {
     const [commentBox, setCommentBox] = useState("");
-    const [loading, setloading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { post } = props;
-    const {addComment: createComment} = usePosts();
+    const { addComment: createComment, removeComment } = usePosts();
+    const auth = useAuth();
 
     const addComment = async () => {
-        setloading(true);
+        setLoading(true);
         const toastID = toast.loading("Adding comment...");
         const response = await createComment(post, commentBox, toastID);
         if (response.success)
             setCommentBox("");
-        setloading(false);
+        setLoading(false);
+    }
+
+    const deleteComment = async (comment_id) => {
+        if (!loading) {
+            setLoading(true);
+            const toastID = toast.loading("Deleting comment...")
+            await removeComment(post, comment_id, toastID);
+            setLoading(false);
+        }
     }
 
     return <div className={styles.postWrapper}>
@@ -56,6 +66,16 @@ const Post = (props) => {
                     />
                     <span>{post.comments.length}</span>
                 </div>
+
+                {auth.user && auth.user._id === post.user._id &&
+                    <div className={styles.postDeleteIcon}>
+                        <img
+                            src="https://cdn-icons-png.flaticon.com/512/3132/3132919.png"
+                            alt="delete-icon"
+                        />
+                        <span>Remove</span>
+                    </div>
+                }
             </div>
             <div className={styles.postCommentBox}>
                 <input
@@ -67,7 +87,7 @@ const Post = (props) => {
             </div>
 
             <div className={styles.postCommentsList}>
-                {post.comments.map((comment) => <Comment comment={comment} key={comment._id} />)}
+                {post.comments.map((comment) => <Comment comment={comment} post={post} deleteComment={deleteComment} key={comment._id} />)}
             </div>
         </div>
     </div>

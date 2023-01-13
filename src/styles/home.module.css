@@ -68,13 +68,13 @@
   display: flex;
   align-items: center;
 }
-.postCommentsIcon {
+.postCommentsIcon, .postDeleteIcon{
   margin-left: 15px;
   display: flex;
   align-items: center;
 }
 .postLike span,
-.postCommentsIcon span {
+.postCommentsIcon span, .postDeleteIcon span {
   margin-left: 7px;
 }
 .postCommentBox {
@@ -129,6 +129,14 @@
   color: #616161;
   margin-left: 8px;
 }
+.postCommentHeader .postCommentDelete {
+  font-size: 12px;
+  line-height: 16px;
+  color: #FF7043;
+  margin-left: 8px;
+  text-decoration: underline;
+  cursor: pointer;
+}
 .postCommentContent {
   margin-top: 7px;
 }
@@ -155,7 +163,7 @@
 .friendsList {
   background: #fff;
   margin-left: 50px;
-  flex-grow: 0.2;
+  width: 25%;
   height: 50vh;
   box-sizing: border-box;
   margin-top: 20px;
@@ -198,7 +206,7 @@
   padding: 0 10px;
 }
 .postsList {
-  flex-grow: .8;
+  flex-grow: 1;
 }
 
 /* Create Post */

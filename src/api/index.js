@@ -91,6 +91,12 @@ export const createComment = (post_id, content) => {
     });
 }
 
+export const deleteComment = (comment_id, content) => {
+    return customFetch(API_URLS.deleteComment(comment_id), { 
+        method: "DELETE"
+    });
+}
+
 export const searchUser = (text) => {
     return customFetch(API_URLS.searchUsers(text), { 
         method: "GET"
