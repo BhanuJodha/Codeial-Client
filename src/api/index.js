@@ -82,6 +82,12 @@ export const fetchFollowing = () => {
     });
 }
 
+export const fetchFriends = () => {
+    return customFetch(API_URLS.friends(), {
+        method: "GET"
+    });
+}
+
 export const removeFollow = (userId) => {
     return customFetch(API_URLS.removeFollow(userId), {
         method: "POST"
@@ -122,6 +128,12 @@ export const searchUser = (text) => {
 
 export const toggleLike = (id, onModel) => {
     return customFetch(API_URLS.toggleLike(id, onModel), {
+        method: "GET"
+    });
+}
+
+export const getChat = (userId) => {
+    return customFetch(API_URLS.getChat(userId), {
         method: "GET"
     });
 }

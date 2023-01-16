@@ -11,7 +11,7 @@ import { PostsProvider } from './providers/PostsProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <>
     <AuthProvider>
       <PostsProvider>
         <App />
@@ -19,8 +19,8 @@ root.render(
     </AuthProvider>
 
     {/* Notification services */}
-    <ToastContainer autoClose={5000} style={{ marginBlockStart: "50px" }} newestOnTop={true} position={'top-right'} />
-  </React.StrictMode>
+    < ToastContainer autoClose={5000} style={{ marginBlockStart: "50px" }} newestOnTop={true} position={'top-right'} />
+  </>
 );
 
 

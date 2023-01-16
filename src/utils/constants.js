@@ -11,6 +11,7 @@ export const API_URLS = {
   addFollow: (userId) =>
     `${API_ROOT}/followship/create_following?user_id=${userId}`,
   following: () => `${API_ROOT}/followship/fetch_user_following`,
+  friends: () => `${API_ROOT}/followship/fetch_user_friends`,
   removeFollow: (userId) =>
     `${API_ROOT}/followship/remove_following?user_id=${userId}`,
   toggleLike: (itemId, itemType) =>
@@ -22,6 +23,7 @@ export const API_URLS = {
   editUser: () => `${API_ROOT}/users/edit`,
   userInfo: (userId) => `${API_ROOT}/users/${userId}`,
   searchUsers: (searchText) => `${API_ROOT}/users/search?text=${searchText}`,
+  getChat: (userId) => `${API_ROOT}/chats/getchat/${userId}`
 };
 
 export const LOCAL_KEY = "__codial_key__"; 

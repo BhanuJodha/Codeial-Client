@@ -17,12 +17,14 @@ const Post = (props) => {
     const auth = useAuth();
 
     const addComment = async () => {
-        setLoading(true);
-        const toastID = toast.loading("Adding comment...");
-        const response = await createComment(post, commentBox, toastID);
-        if (response.success)
-            setCommentBox("");
-        setLoading(false);
+        if (!loading && auth.user) {
+            setLoading(true);
+            const toastID = toast.loading("Adding comment...");
+            const response = await createComment(post, commentBox, toastID);
+            if (response.success)
+                setCommentBox("");
+            setLoading(false);
+        }
     }
 
     const deleteComment = async (comment_id) => {
@@ -44,7 +46,7 @@ const Post = (props) => {
     }
 
     const toggleLike = async (reference, onModel) => {
-        if (!loading) {
+        if (!loading && auth.user) {
             setLoading(true);
             await like(reference, onModel);
             setLoading(false);
@@ -105,8 +107,7 @@ const Post = (props) => {
                     placeholder="Start typing comment here..."
                     value={commentBox}
                     onKeyDown={(e) => { e.key === "Enter" && addComment() }}
-                    onChange={(e) => setCommentBox(e.target.value)}
-                    disabled={loading} />
+                    onChange={(e) => setCommentBox(e.target.value)}/>
             </div>
 
             <div className={styles.postCommentsList}>

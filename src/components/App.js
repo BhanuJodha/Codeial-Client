@@ -3,6 +3,7 @@ import { useAuth } from "../hooks";
 
 import { Home, Login, Page404, Setting, Signup, UserProfile } from "../pages";
 import { PrivateRoute, PublicRoute } from "../utils";
+import ChatBar from "./ChatBar";
 import Loader from "./Loader";
 import Navbar from "./Navbar";
 
@@ -28,6 +29,7 @@ function App() {
 
           <Route path="/*" element={<Navigate to="/Page404" />} />
         </Routes>
+        {auth.user && <ChatBar />}
       </Router>
     </div>
   );
