@@ -5,21 +5,26 @@
   margin-top: 20px;
   background: #fff;
 }
+
 .postHeader {
   padding: 10px 10px;
 }
+
 .postAvatar {
   display: flex;
 }
-.postAvatar > div {
+
+.postAvatar>div {
   display: flex;
   flex-direction: column;
   padding-left: 12px;
 }
+
 .postAvatar img {
   height: 40px;
   border-radius: 4px;
 }
+
 .postAvatar .postAuthor {
   color: #616161;
   /* font-family: Open Sans; */
@@ -28,6 +33,7 @@
   font-size: 16px;
   line-height: 22px;
 }
+
 .postAvatar .postTime {
   /* font-family: Open Sans; */
   font-style: normal;
@@ -36,6 +42,7 @@
   line-height: 19px;
   color: #9e9e9e;
 }
+
 .postContent {
   font-style: normal;
   font-weight: normal;
@@ -44,6 +51,7 @@
   color: #424242;
   margin-top: 15px;
 }
+
 .postActions {
   margin-top: 15px;
   padding: 5px;
@@ -58,32 +66,42 @@
   border-right: none;
   border-left: none;
 }
+
 .postActions img {
   height: 18px;
 }
+
 .postActions img:hover {
   cursor: pointer;
 }
+
 .postLike {
   display: flex;
   align-items: center;
 }
-.postCommentsIcon, .postDeleteIcon{
+
+.postCommentsIcon,
+.postDeleteIcon {
   margin-left: 15px;
   display: flex;
   align-items: center;
 }
+
 .postLike span,
-.postCommentsIcon span, .postDeleteIcon span {
+.postCommentsIcon span,
+.postDeleteIcon span {
   margin-left: 7px;
 }
+
 .postCommentBox {
   padding: 10px 10px;
 }
+
 .postCommentBox input:placeholder-shown {
   font-style: italic;
   font-size: .8em;
 }
+
 .postCommentBox input {
   border: 1px solid #e0e0e0;
   border-radius: 4px;
@@ -94,13 +112,16 @@
   box-sizing: border-box;
   padding: 5px;
 }
+
 .postCommentBox input:focus {
   outline: none;
 }
+
 .postCommentsList {
   padding: 5px 10px;
   position: relative;
 }
+
 .postCommentItem {
   background: #F3E5F5;
   border-radius: 4px;
@@ -108,27 +129,32 @@
   margin-bottom: 14px;
   position: relative;
 }
+
 .postCommentHeader {
   display: flex;
 }
+
 .postCommentHeader .postCommentAuthor {
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
   color: #757575;
 }
+
 .postCommentHeader .postCommentTime {
   font-size: 12px;
   line-height: 16px;
   color: #9e9e9e;
   margin-left: 8px;
 }
+
 .postCommentHeader .postCommentLikes {
   font-size: 12px;
   line-height: 16px;
   color: #616161;
   margin-left: 8px;
 }
+
 .postCommentHeader .postCommentDelete {
   font-size: 12px;
   line-height: 16px;
@@ -137,17 +163,21 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
 .postCommentContent {
   margin-top: 7px;
 }
+
 .postCommentsList .commentLike {
   position: absolute;
   right: 21px;
   top: 13px;
 }
+
 .postCommentsList .commentLike img {
   height: 20px;
 }
+
 .postCommentsList .commentLike img:hover {
   cursor: pointer;
 }
@@ -160,10 +190,11 @@
   margin: 0 auto;
   flex-grow: 0.8;
 }
+
 .friendsList {
   background: #fff;
   margin-left: 50px;
-  width: 25%;
+  flex: .1 .4 325px;
   height: 50vh;
   box-sizing: border-box;
   margin-top: 20px;
@@ -171,6 +202,7 @@
   border-radius: 4px;
   overflow-y: auto;
 }
+
 .friendsList .header {
   border-bottom: 1px solid #e0e0e0;
   font-weight: 600;
@@ -178,15 +210,18 @@
   color: #424242;
   padding: 20px;
 }
+
 .friendsItem img {
   height: 40px;
   border-radius: 4px;
 }
+
 .noFriends {
   display: flex;
   justify-content: center;
   margin: 20px 0;
 }
+
 .friendsItem {
   display: flex;
   align-items: center;
@@ -198,13 +233,19 @@
   line-height: 22px;
   text-decoration: none;
 }
+
 .friendsItem:hover {
   cursor: pointer;
   background-color: #f1f1f1;
 }
+
 .friendsName {
   padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 .postsList {
   flex-grow: 1;
 }
@@ -217,12 +258,14 @@
   box-sizing: border-box;
   border-radius: 4px;
 }
-.createPost > div {
+
+.createPost>div {
   padding: 10px;
   border-top: 1px solid #d0d0d0;
   display: flex;
   justify-content: flex-end;
 }
+
 .createPost textarea {
   height: 90px;
   padding: 10px;
@@ -234,6 +277,7 @@
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
+
 .addPostBtn {
   width: 112px;
   height: 42px;
@@ -246,10 +290,12 @@
   font-weight: 600;
   border: none;
 }
+
 .addPostBtn:focus,
 .createPost textarea:focus {
   outline: none;
 }
+
 .addPostBtn:hover {
   cursor: pointer;
 }

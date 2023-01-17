@@ -92,8 +92,8 @@ class ChatBar extends React.Component {
             <div className={styles.friendList}>
 
                 <div className={styles.chatHeader} style={{ backgroundColor: "#C5CAE9" }}>
-                    <div className={styles.userName}>Friends List</div>
-                    <img src={this.state.isMinimized ? "https://cdn-icons-png.flaticon.com/512/5343/5343560.png" : "https://cdn-icons-png.flaticon.com/512/6057/6057365.png"} alt="minimize" onClick={this.toggleMinimize} />
+                    <div className={styles.userName}>Messaging</div>
+                    <img src={this.state.isMinimized ? "https://cdn-icons-png.flaticon.com/512/271/271239.png" : "https://cdn-icons-png.flaticon.com/512/32/32195.png"} alt="minimize" onClick={this.toggleMinimize} />
                 </div>
 
                 {this.state.isMinimized ||
