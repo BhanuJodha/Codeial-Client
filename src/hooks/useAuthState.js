@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import jwt from "jwt-decode";
 
-import { login, signup, editUser as editUserApi, addFollow, removeFollow, fetchFollowing } from "../api";
+import { login, signup, editUser as editUserApi, addFollow, removeFollow, fetchFollowing, checkGoogleAuth } from "../api";
 import { LOCAL_KEY } from "../utils";
 
 export const useAuthProvideState = () => {
@@ -12,6 +12,7 @@ export const useAuthProvideState = () => {
 
     // Adding user if exist
     useEffect(() => {
+        setLoading(true);
         (async () => {
             if (token) {
                 const user = jwt(token);
@@ -19,9 +20,28 @@ export const useAuthProvideState = () => {
                 user.following = response.data.following;
                 setUser(user);
             }
+            else {
+                // Check for google authentication
+                await checkGoogle();
+            }
             setLoading(false);
         })();
     }, [token])
+
+    const checkGoogle = async () => {
+        const response = await checkGoogleAuth();
+
+        if (response.success) {
+            // setting user in local storage
+            localStorage.setItem(LOCAL_KEY, response.data.token);
+            // setting token in state then useEffect sets the user
+            setToken(response.data.token);
+            // updating notification
+            toast.success(response.message);
+        }
+
+        return response;
+    }
 
     const logIn = async (email, password, toastID) => {
         const response = await login(email, password);
@@ -122,6 +142,7 @@ export const useAuthProvideState = () => {
         signUp,
         editUser,
         createFollowing,
-        removeFollowing
+        removeFollowing,
+        checkGoogle
     }
 }

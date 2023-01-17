@@ -41,6 +41,13 @@ export const login = (email, password) => {
     });
 }
 
+export const checkGoogleAuth = () => {
+    return customFetch(API_URLS.checkGoogleAuth(), {
+        method: "GET",
+        credentials: "include"
+    });
+}
+
 export const signup = (name, email, password, confirm_password) => {
     return customFetch(API_URLS.signup(), {
         method: "POST",

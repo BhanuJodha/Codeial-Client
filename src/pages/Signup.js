@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "../hooks";
 
 import styles from "../styles/login.module.css";
+import { API_ROOT } from "../utils";
 
 const Signup = () => {
     const [name, setName] = useState("");
@@ -31,6 +32,11 @@ const Signup = () => {
 
             setSigningUp(false);
         }
+    }
+
+    const googleSignIn = (e) => {
+        e.preventDefault();
+        window.open(API_ROOT + "/users/oauth/google", "_self")
     }
 
     return (
@@ -82,7 +88,7 @@ const Signup = () => {
                 <div className={styles.divider}>
                     <span>OR</span>
                 </div>
-                <button className={styles.google} disabled={signingUp}><img src='https://cdn-icons-png.flaticon.com/512/300/300221.png' alt='google'></img> Sign In with Google</button>
+                <button className={styles.google} disabled={signingUp} formNoValidate onClick={googleSignIn}><img src='https://cdn-icons-png.flaticon.com/512/300/300221.png' alt='google'></img> Sign In with Google</button>
             </div>
         </form>
     );

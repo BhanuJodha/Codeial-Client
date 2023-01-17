@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks';
 import styles from '../styles/login.module.css';
+import { API_ROOT } from '../utils';
 
 const Login = () => {
   // fetching signup email
@@ -27,6 +28,11 @@ const Login = () => {
     setLogging(false);
   }
 
+  const googleSignIn = (e) => {
+    e.preventDefault();
+    window.open(API_ROOT + "/users/oauth/google", "_self")
+  }
+
   return (
     <form className={styles.loginForm} onSubmit={formHandler}>
       <span className={styles.loginSignupHeader}>Log In</span>
@@ -41,11 +47,11 @@ const Login = () => {
 
 
       <div className={styles.field}>
-        <button disabled={logging}>{logging ? "Logging In..." : "Log In"}</button>
+        <button type='submit' disabled={logging}>{logging ? "Logging In..." : "Log In"}</button>
         <div className={styles.divider}>
           <span>OR</span>
         </div>
-        <button className={styles.google} disabled={logging}><img src='https://cdn-icons-png.flaticon.com/512/300/300221.png' alt='google'></img> Sign In with Google</button>
+        <button className={styles.google} formNoValidate onClick={googleSignIn} disabled={logging}><img src='https://cdn-icons-png.flaticon.com/512/300/300221.png' alt='google'></img> Sign In with Google</button>
       </div>
     </form>
   );
