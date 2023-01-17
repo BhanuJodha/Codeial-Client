@@ -29,7 +29,6 @@ class ChatBox extends React.Component {
     }
 
     newMessageListener = (messageObj) => {
-        console.log(this.state)
         if (messageObj.sender === this.props.user._id || messageObj.receiver === this.props.user._id) {
             this.state.chat.messages.unshift(messageObj);
             this.setState({
